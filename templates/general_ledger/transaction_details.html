@@ -1,0 +1,124 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '' %}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}lib/pickadate.css">
+ {% endblock %}
+
+{% block title %} Transaction Details{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+  <div class="content-overlay"></div>
+  <div class="content-wrapper">
+      <div class="content-header row">
+          <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+              <h3 class="content-header-title mb-0 d-inline-block">Transaction Details</h3>
+              <div class="row breadcrumbs-top d-inline-block">
+                  <div class="breadcrumb-wrapper col-12">
+                      <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="{% url 'task:task-home' %}">Home</a>
+                          </li>
+                          <li class="breadcrumb-item"><a href="#">Transaction</a>
+                          </li>
+                          <li class="breadcrumb-item active">Transaction Details
+                          </li>
+                      </ol>
+                  </div>
+              </div>
+          </div>
+          <div class="content-header-right col-md-6 col-12">
+              <div class="btn-group float-md-right">
+                  <button class="btn btn-info dropdown-toggle mb-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                  <div class="dropdown-menu arrow">
+                    <a class="dropdown-item" href=""><i class="la la-edit mr-1"></i> Edit</a>
+
+                      <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fa fa-cog mr-1"></i> Settings</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="content-body">
+          <section class="card">
+              <div id="invoice-template" class="card-body p-4">
+                  <!-- Invoice Company Details -->
+                  <div id="invoice-company-details" class="row">
+
+
+                  </div>
+                  <!-- Invoice Company Details -->
+
+                  <!-- Invoice Customer Details -->
+                  <div id="invoice-customer-details" class="row pt-2">
+                      <div class="col-12 text-center text-sm-left">
+                          <p class="text-muted"> <h3>Task Title : {{ trans.description|slice:":25"}} ...</h3> </p>
+                      </div>
+                      <div class="col-sm-6 col-12 text-center text-sm-left">
+                          <ul class="px-0 list-unstyled">
+                              <li class="text-bold-800 text-uppercase"> Department | {{ trans.department }}  </li>
+                              <li class="text-bold-800">  Employee / Management | {{ trans.employee_management }}  </li>
+                              <li> Date Created | {{ trans.created_at }} </li>
+                            <!--  <li>Albuquerque,</li>
+                              <li>New Mexico-87102.</li> -->
+                          </ul>
+                      </div>
+                      <div class="col-sm-6 col-12 text-center text-sm-right">
+                          <p class="text-uppercase"><span class="text-muted">Transaction Id :</span> {{ trans.transaction_id }}</p>
+                          <p><span class="text-muted">Reference Id :</span> {{ trans.reference_id }}</p>
+                          <p><span class="text-muted">Institution :</span> {{ trans.institution  }}</p>
+                      </div>
+                  </div>
+                  <!-- Invoice Customer Details -->
+
+                  <!-- Invoice Items Details -->
+                  <div id="invoice-items-details" class="pt-2">
+                      <div class="row">
+                          <div class="table-responsive col-12">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th>Description</th>
+                                          <th>Amount</th>
+                                          <th>Account Dr</th>
+                                          <th>Account Cr</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td class="phone">{{trans.description}}</td>
+                                          <td class="phone">{{trans.amount|floatformat:0 }}</td>
+                                          <td class="phone">{{trans.accounts_dr}}</td>
+                                          <td class="phone">{{trans.accounts_cr}}</td>
+
+                                      </tr>
+
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+          </section>
+
+      </div>
+  </div>
+
+</div>
+
+{% endblock content %}
+  <script src="{% static '' %}lib/picker.js"></script>
+  <script src="{% static '' %}lib/picker.date.js"></script>
+  <script src="{% static '' %}lib/legacy.js"></script>
+
+  <script type="text/javascript">
+      $("#id_due_date").pickadate({format: 'yyyy-mm-dd' }).val();
+</script>
+
+{% block script %}
+
+ {% endblock %}

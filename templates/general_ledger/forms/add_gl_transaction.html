@@ -1,0 +1,166 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '' %}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}lib/pickadate.css">
+ {% endblock %}
+
+{% block title %} Add Transaction{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title" id="basic-layout-form">Transaction Form</h3>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p></p>
+                            </div>
+
+                            <form class="form" method="post" novalidate>
+                              {% csrf_token %}
+
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Date</label>
+                                          {% render_field form.created_at class="form-control" placeholder="Date" %}
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="projectinput1">Department</label>
+                                        {% render_field form.department class="form-control" placeholder="" %}
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="projectinput1">Employee / Management</label>
+                                        {% render_field form.employee_management class="form-control" placeholder="" %}
+                                    </div>
+                                  </div>
+
+
+                              </div>
+
+                              <div class="row">
+
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                      <label for="projectinput1">Transaction Id</label>
+                                      {% render_field form.transaction_id class="form-control" placeholder="" %}
+                                  </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                  <div class="form-group">
+                                      <label for="projectinput1">Reference Id</label>
+                                      {% render_field form.reference_id class="form-control" placeholder="" %}
+                                  </div>
+                                </div>
+
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Institution</label>
+                                          {% render_field form.institution class="form-control" placeholder="Address" rows="2" %}
+                                      </div>
+                                  </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="projectinput1">Description</label>
+                                        {% render_field form.description class="form-control" placeholder="Description" %}
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Amount</label>
+                                          {% render_field form.amount class="form-control" placeholder="Amount" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Account Dr</label>
+                                          {% render_field form.accounts_dr class="form-control" placeholder="Accounts Debit" %}
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-3">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Account Cr</label>
+                                          {% render_field form.accounts_cr class="form-control" placeholder="Accounts Credit" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                                  <div class="form-actions">
+                                      <a href="{% url 'general_ledger:general-ledger' %}">
+                                      <button type="button" class="btn btn-warning mr-1">
+                                          <i class="ft-x"></i> Cancel
+                                      </button>
+                                    </a>
+                                      <button type="submit" class="btn btn-primary">
+                                          <i class="la la-check-square-o"></i> Save
+                                      </button>
+                                  </div>
+
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+    </section>
+    <!-- // Basic form layout section end -->
+</div>
+
+{% endblock content %}
+  <script src="{% static '' %}lib/picker.js"></script>
+  <script src="{% static '' %}lib/picker.date.js"></script>
+  <script src="{% static '' %}lib/legacy.js"></script>
+
+  <script type="text/javascript">
+      $("#id_due_date").pickadate({format: 'yyyy-mm-dd' }).val();
+</script>
+
+{% block script %}
+
+ {% endblock %}

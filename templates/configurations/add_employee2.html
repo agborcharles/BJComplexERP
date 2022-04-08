@@ -1,0 +1,185 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %} Employees | Home {% endblock title %}
+
+
+{% block content %}
+
+<div class="content-body">
+    <!-- Basic form layout section start -->
+    <section id="basic-form-layouts">
+        <div class="row match-height">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-form">Project Info</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p></p>
+                            </div>
+
+                            <form class="form" method="post" novalidate>
+                              {% csrf_token %}
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Created</label>
+                                          {% render_field form.created class="form-control" placeholder="Date Created" %}
+                                      </div>
+                                  </div>
+
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">First Name</label>
+                                          {% render_field form.first_name class="form-control" placeholder="Date Created" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Middle Name</label>
+                                          {% render_field form.middle_name class="form-control" placeholder="Your Names" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Last Name</label>
+                                          {% render_field form.last_name class="form-control" placeholder="Your Names" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2"> Slug</label>
+                                          {% render_field form.slug class="form-control" placeholder="your-names" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Role</label>
+                                          {% render_field form.role class="form-control" placeholder="Employee Role" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Profile Image</label>
+                                          {% render_field form.profile_image class="form-control" placeholder="Date Created" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2"> Date of Birth</label>
+                                          {% render_field form.dob class="form-control" placeholder="Date of Birth" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2"> Email</label>
+                                          {% render_field form.email class="form-control" placeholder="Date of Birth" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Telephone</label>
+                                          {% render_field form.tel class="form-control" placeholder="Employee Role" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-10">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Address</label>
+                                          {% render_field form.address class="form-control" placeholder="Address" rows="2" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2"> Level</label>
+                                          {% render_field form.level class="form-control" placeholder="Level" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Work Start Date</label>
+                                          {% render_field form.work_start_date class="form-control" placeholder="Employee Role" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Work End Date</label>
+                                          {% render_field form.work_end_date class="form-control" placeholder="Address" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Signature Image</label>
+                                          {% render_field form.signature_images class="form-control" placeholder="Your Names" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput2">Contract Type</label>
+                                          {% render_field form.contract_type class="form-control" placeholder="Employee Role" %}
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label for="projectinput1">Status</label>
+                                          {% render_field form.status class="form-control" placeholder="Address" %}
+                                      </div>
+                                  </div>
+                              </div>
+
+
+
+                                  <button type="submit" class="btn btn-success">Save Product</button>
+
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+    </section>
+    <!-- // Basic form layout section end -->
+</div>
+
+{% endblock content %}

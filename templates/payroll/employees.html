@@ -1,0 +1,202 @@
+{% extends "bankbase.html" %}
+
+{% load static %}
+{% block title %} Employees{% endblock title %}
+
+{% block breadcrumb %}
+          <div class="content-header row">
+                <div class="content-header-left col-md-6 col-12 mb-2">
+                    <h3 class="content-header-title">All Employee List</h3>
+                    <div class="row breadcrumbs-top">
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Employees</a>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right col-md-6 col-12">
+                    <div class="media width-250 float-right">
+                        <media-left class="media-middle">
+                            <div id="sp-bar-total-sales"></div>
+                        </media-left>
+                        <div class="media-body media-right text-right">
+                            <h3 class="m-0"></h3><span class="text-muted"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{% endblock breadcrumb %}
+
+{% block content %}
+
+<section id="payments-details">
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title float-left">
+                      Employees
+                  </h4>
+
+                  <form method="GET" action="">
+                    <div class="form-row \">
+                        <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                          <label for="inputPassword4">Start Date</label>
+                          <input type="date" class="form-control" id="#publishDateMin" name="start_date">
+                        </div>
+                        <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                          <label for="inputPassword4">End Date</label>
+                          <input type="date" class="form-control" id="#publishDateMax" name="end_date">
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                </form>
+              </div>
+          </div>
+      </div>
+    </div>
+</section>
+
+<!-- Base style table -->
+                <section id="base-style">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title float-left">
+                                        Employees List
+                                    </h4>
+                                   <div class="float-right">
+                                        <a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white" href="{% url 'payroll:add-employee' %}">
+                                            <i class="ft-plus white"></i>Add Employee
+                                        </a>
+                                    </div>
+
+                                    <div class="float-right mr-1">
+                                        <a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white" href="{% url 'payroll:add-salaries' %}">
+                                            <i class="ft-plus white"></i>Pay Salary
+                                        </a>
+                                    </div>
+
+                                    <div class="float-right mr-1">
+                                        <a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white" href="{% url 'payroll:salary' %}">
+                                            <i class="ft-home white"></i> Salaries
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body mt-1">
+                                    <div class="table-responsive">
+                                        <table id="active-accounts" class="table alt-pagination table-wrapper">
+                                            <thead>
+                                                <tr>
+                                                    <th class="bemp-top-0"></th>
+                                                    <th class="bemp-top-0">Name</th>
+                                                    <th class="bemp-top-0">Gender</th>
+                                                    <th class="bemp-top-0">Age</th>
+                                                    <th class="bemp-top-0">Nationality</th>
+                                                    <th class="bemp-top-0">Tel</th>
+                                                    <th class="bemp-top-0">Department</th>
+                                                    <th class="bemp-top-0">Role</th>
+                                                    <th class="bemp-top-0">Contract</th>
+                                                    <th class="bemp-top-0">Work Status</th>
+
+                                                    <th class="bemp-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for emp in employees %}
+                                                <tr>
+
+                                                  <td class="align-left bemp-bottom-0">
+                                                    {% if emp.profile_image %}
+                                                        <img src="{{ emp.profile_image.url }}" style="max-width:20%"; alt="" class="rounded-circle doctor-img">
+                                                    {% else %}
+                                                        <img src="{% static '' %}app-assets/images/portrait/small/avatar-s-10.png" style="max-width:20%"; alt="" class="rounded-circle doctor-img">
+                                                    {% endif %}
+                                                    </td>
+
+
+                                                    <td class="align-middle">
+                                                        <div class="ac-type">
+                                                            <a href="{{emp.get_absolute_url}}">
+                                                              {{emp.get_full_name}}
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-type">{{emp.gender}}</div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-number">{{emp.get_age}}</div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{emp.nationality}}</div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">
+                                                        {{emp.tel}}
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{emp.department}} </div>
+                                                    </td>
+
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{emp.role}} </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{emp.employmenttype}} </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{emp.employment_status}} </div>
+                                                    </td>
+
+
+                                                    <td class="align-middle">
+                                                        <div class="action">
+                                                            <a href="bank-add-account.html"><i class="la la-eye success"></i></a>
+                                                            <a href=" {% url 'payroll:edit-employee' emp.pk %}"><i class="la la-pencil-square ml-1 success"></i></a>
+                                                            <a href="#"><i class="la la-trash ml-1 danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                              {%  endfor %}
+
+                                              <tfoot>
+                                                  <tr>
+                                                    <th class="bemp-top-0"></th>
+                                                    <th class="bemp-top-0">Name</th>
+                                                    <th class="bemp-top-0">Gender</th>
+                                                    <th class="bemp-top-0">Age</th>
+                                                    <th class="bemp-top-0">Nationality</th>
+                                                    <th class="bemp-top-0">Tel</th>
+                                                    <th class="bemp-top-0">Department</th>
+                                                    <th class="bemp-top-0">Role</th>
+                                                    <th class="bemp-top-0">Contract</th>
+                                                    <th class="bemp-top-0">Work Status</th>
+
+                                                    <th class="bemp-top-0">Action</th>
+                                                  </tr>
+                                              </tfoot>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+{% endblock  %}

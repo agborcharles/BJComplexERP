@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %} Employees | Home {% endblock title %}
+
+
+{% block content %}
+
+<div class="content-body">
+  <!-- Recent Transactions -->
+  <div class="row">
+      <div id="recent-transactions" class="col-12">
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title">Employees Table</h4>
+                  <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+
+                  <div class="heading-elements">
+                      <ul class="list-inline mb-0">
+                          <li><a class="btn btn-sm btn-primary box-shadow-2 round btn-min-width pull-right" href="{% url 'configurations:add-worker' %}" target="">Add Employee</a></li>
+                          <li><a class="btn btn-sm btn-success box-shadow-2 round btn-min-width pull-right" href="{% url 'configurations:add-department' %}" target="">Add Department</a></li>
+                          <li><a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right" href="{% url 'configurations:add-role' %}" target="">Add Role</a></li>
+                      </ul>
+
+                  </div>
+
+                  <br><br>
+
+                  <form class="form-group position-relative">
+                    <input type="text" class="form-control todo-search" id="todo-search" placeholder="Search Name" name="search">
+                    <div class="form-control-position">
+                        <i class="ft-mic font-medium-4"></i>
+                    </div>
+                  </form>
+
+              </div>
+
+              <div class="card-content">
+                  <div class="table-responsive">
+                    <table id="recent-orders" class="table table-hover table-xl mb-0">
+                      <thead>
+                        <tr>
+                              <th class="border-top-0">Status</th>
+                              <th class="border-top-0">Employee Name</th>
+                              <th class="border-top-0">Profile Pic</th>
+                              <th class="border-top-0">Department</th>
+                              <th class="border-top-0">Role</th>
+                              <th class="border-top-0">Start Date</th>
+                              <th class="border-top-0">End Date</th>
+                              <th class="border-top-0">Phone Number</th>
+                              <th class="border-top-0">Actions</th>
+                          </tr>
+                      </thead>
+
+                      {% for employee in employees %}
+
+                      {% if employee.status %}
+                      <tr>
+                          <td class="text-truncate"><i class="la la-dot-circle-o success font-medium-1 mr-1"></i> Active</td>
+                          <td class="text-truncate"><a href="{{employee.get_absolute_url}}">{{employee.first_name}} {{employee.last_name}}</a></td>
+
+                          {% if employee.profile_image %}
+                          <td class="text-truncate">
+                              <span class="avatar avatar-xs">
+                                  <img class="box-shadow-2" src="{{employee.profile_image.url }}" alt="avatar">
+                              </span>
+                              <span></span>
+                          </td>
+                          {% endif %}
+
+                          <td class="text-truncate"><a href="#"></a>{{employee.department}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.role}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.work_end_date}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.work_end_date}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.tel}}</td>
+                          <td>
+                            <a href="{% url 'configurations:edit-worker' employee.pk %}"><i class="ft-edit text-success"></i></a>
+                            <a href="{% url 'configurations:delete-worker' employee.pk %}"><i class="ft-trash-2 ml-1 text-warning"></i></a>
+                          </td>
+
+                      </tr>
+
+                      {% else %}
+                      <tr>
+                          <td class="text-truncate"><i class="la la-dot-circle-o danger font-medium-1 mr-1"></i> Inactive</td>
+                          <td class="text-truncate"><a href="{{employee.get_absolute_url}}">{{employee.first_name}}</a></td>
+
+                          {% if employee.profile_image %}
+                          <td class="text-truncate">
+                              <span class="avatar avatar-xs">
+                                  <img class="box-shadow-2" src="{{employee.profile_image.url }}" alt="avatar">
+                              </span>
+                              <span></span>
+                          </td>
+                          {% endif %}
+
+                          <td class="text-truncate"><a href="#"></a>{{employee.department}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.role}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.work_end_date}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.work_end_date}}</td>
+                          <td class="text-truncate"><a href="#"></a>{{employee.tel}}</td>
+                          <td>
+                            <a href="{% url 'configurations:edit-worker' employee.pk %}"><i class="ft-edit text-success"></i></a>
+                            <a href="{% url 'configurations:delete-worker' employee.pk %}"><i class="ft-trash-2 ml-1 text-warning"></i></a>
+                          </td>
+
+                      </tr>
+                      {% endif %}
+
+                      {% endfor %}
+
+                    </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--/ Recent Transactions -->
+</div>
+
+{% endblock content %}

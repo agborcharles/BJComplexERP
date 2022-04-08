@@ -1,0 +1,548 @@
+{% extends "bankbase.html" %}
+
+
+{% block title %} Bank Transactions {% endblock title %}
+
+{% block breadcrumb %}
+          <div class="content-header row">
+                <div class="content-header-left col-md-6 col-12 mb-2">
+                    <h3 class="content-header-title">All deposit</h3>
+                    <div class="row breadcrumbs-top">
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Account</a>
+                                </li>
+                                <li class="breadcrumb-item active">All deposit
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right col-md-6 col-12">
+                    <div class="media width-250 float-right">
+                        <media-left class="media-middle">
+                            <div id="sp-bar-total-sales"></div>
+                        </media-left>
+                        <div class="media-body media-right text-right">
+                            <h3 class="m-0">$5,668</h3><span class="text-muted">Sales</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{% endblock breadcrumb %}
+
+{% block content %}
+
+<section id="payments-details">
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title float-left">
+                      Payment Status
+                  </h4>
+
+                  <form method="GET" action="">
+                    <div class="form-row \">
+                        <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                          <label for="inputPassword4">Start Date</label>
+                          <input type="date" class="form-control" id="#publishDateMin" name="start_date">
+                        </div>
+                        <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                          <label for="inputPassword4">End Date</label>
+                          <input type="date" class="form-control" id="#publishDateMax" name="end_date">
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                </form>
+              </div>
+          </div>
+      </div>
+    </div>
+</section>
+
+<!-- Base style table -->
+                <section id="base-style">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title float-left">
+                                        Deposit Details
+                                    </h4>
+                                    <div class="float-right">
+                                        <a href="{% url 'bank:add-deposit' %}" class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white" >
+                                            <i class="ft-plus white"></i> Deposit
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body mt-1">
+                                    <div class="table-responsive">
+                                        <table id="active-deposit" class="table alt-pagination table-wrapper">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0">Date</th>
+                                                    <th class="border-top-0">Type</th>
+                                                    <th class="border-top-0">Bank</th>
+                                                    <th class="border-top-0">Branch</th>
+                                                    <th class="border-top-0">A/c Number</th>
+                                                    <th class="border-top-0">Holder Name</th>
+                                                    <th class="border-top-0">Transaction Id</th>
+                                                    <th class="border-top-0">Amount</th>
+                                                    <th class="border-top-0">Status</th>
+                                                    <th class="border-top-0">Account Dr</th>
+                                                    <th class="border-top-0">Account Cr</th>
+                                                    <th class="border-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for deposit in deposits %}
+                                                <tr>
+
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{deposit.created}}</div>
+                                                  </td>
+
+
+                                                  {% if deposit.account_type == 'Current' %}
+                                                    <td class="align-middle">
+                                                      <div class="ac-symbol current">
+                                                          <i class="la la-street-view"></i>
+                                                          {{deposit.bank_account.account_type}}
+                                                        </div>
+                                                    </td>
+                                                  {% elif deposit.account_type == 'Savings' %}
+                                                    <td class="align-middle">
+                                                        <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                          {{deposit.bank_account.account_type}}
+                                                        </div>
+                                                    </td>
+                                                  {% elif deposit.account_type == 'Blocked' %}
+                                                    <td class="align-middle">
+                                                        <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                          {{deposit.bank_account.account_type}}
+                                                        </div>
+                                                    </td>
+                                                    {% elif deposit.account_type == 'Joint' %}
+                                                    <td class="align-middle">
+                                                        <div class="ac-symbol joint"><i class="la la-users"></i>
+                                                          {{deposit.bank_account.account_type}}
+                                                        </div>
+                                                    </td>
+
+                                                  {% elif deposit.account_type == 'Loan' %}
+                                                    <td class="align-middle">
+                                                      <div class="ac-symbol loan">
+                                                          <i class="la la-money"></i>
+                                                          {{deposit.bank_account.account_type}}
+                                                        </div>
+
+                                                    </td>
+
+
+                                                {% else %}
+                                                    <td class="align-middle">
+                                                        <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                          {{deposit.bank_account.account_type}}
+                                                        </div>
+                                                    </td>
+                                                {% endif %}
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.bank_account.bank_name}}</div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.bank_account.bank_name.city}}</div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.bank_account.account_number}}</div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.bank_account.account_holder_name}}</div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                  <a href="{% url 'bank:edit-deposit' deposit.pk %}">
+                                                    <div class="ac-type">{{deposit.transaction_id}}</div>
+                                                  </a>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.amount}}</div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-status badge badge-success badge-pill badge-sm">{{deposit.description}}
+                                                    </div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.account_dr}}</div>
+                                                </td>
+
+                                                <td class="align-middle">
+                                                    <div class="ac-type">{{deposit.account_cr}}</div>
+                                                </td>
+
+                                                    <td class="align-middle">
+                                                        <div class="action">
+                                                            <a href=""><i class="la la-eye info"></i></a>
+                                                            <a href="{% url 'bank:edit-deposit' deposit.pk %}"><i class="la la-pencil-square ml-1 success"></i></a>
+                                                            <a href="#"><i class="la la-trash ml-1 danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                              {%  endfor %}
+                                            </tbody>
+
+                                            <tfoot>
+                                              <tr>
+                                                  <th class="border-top-0">Date</th>
+                                                  <th class="border-top-0">Type</th>
+                                                  <th class="border-top-0">Bank</th>
+                                                  <th class="border-top-0">Branch</th>
+                                                  <th class="border-top-0">A/c Number</th>
+                                                  <th class="border-top-0">Holder Name</th>
+                                                  <th class="border-top-0">Transaction Id</th>
+                                                  <th class="border-top-0">{{total_deposits}}</th>
+
+                                              </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section id="base-style">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title float-left">
+                                        Withdrawal Details
+                                    </h4>
+                                    <div class="float-right">
+                                        <a  href="{% url 'bank:add-withdrawal' %}" class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white">
+                                            <i class="ft-plus white"></i> Withdrawal
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body mt-1">
+                                    <div class="table-responsive">
+                                        <table id="active-deposit" class="table alt-pagination table-wrapper">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0">Date</th>
+                                                    <th class="border-top-0">Type</th>
+                                                    <th class="border-top-0">Bank</th>
+                                                    <th class="border-top-0">Branch</th>
+                                                    <th class="border-top-0">A/c Number</th>
+                                                    <th class="border-top-0">Holder Name</th>
+                                                    <th class="border-top-0">Transaction Id</th>
+                                                    <th class="border-top-0">Amount</th>
+                                                    <th class="border-top-0">Status</th>
+                                                    <th class="border-top-0">Account Dr</th>
+                                                    <th class="border-top-0">Account Cr</th>
+                                                    <th class="border-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                              {% for withdrawal in withdrawals %}
+                                                  <tr>
+
+
+                                                    <td class="align-middle">
+                                                        <div class="ac-type">{{withdrawal.created}}</div>
+                                                    </td>
+
+
+                                                    {% if withdrawal.account_type == 'Current' %}
+                                                      <td class="align-middle">
+                                                        <div class="ac-symbol current">
+                                                            <i class="la la-street-view"></i>
+                                                            {{withdrawal.bank_account.account_type}}
+                                                          </div>
+                                                      </td>
+                                                    {% elif withdrawal.account_type == 'Savings' %}
+                                                      <td class="align-middle">
+                                                          <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                            {{withdrawal.bank_account.account_type}}
+                                                          </div>
+                                                      </td>
+                                                    {% elif withdrawal.account_type == 'Blocked' %}
+                                                      <td class="align-middle">
+                                                          <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                            {{withdrawal.bank_account.account_type}}
+                                                          </div>
+                                                      </td>
+                                                      {% elif withdrawal.account_type == 'Joint' %}
+                                                      <td class="align-middle">
+                                                          <div class="ac-symbol joint"><i class="la la-users"></i>
+                                                            {{withdrawal.bank_account.account_type}}
+                                                          </div>
+                                                      </td>
+
+                                                    {% elif withdrawal.account_type == 'Loan' %}
+                                                      <td class="align-middle">
+                                                        <div class="ac-symbol loan">
+                                                            <i class="la la-money"></i>
+                                                            {{withdrawal.bank_account.account_type}}
+                                                          </div>
+
+                                                      </td>
+
+
+                                                  {% else %}
+                                                      <td class="align-middle">
+                                                          <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                            {{withdrawal.bank_account.account_type}}
+                                                          </div>
+                                                      </td>
+                                                  {% endif %}
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.bank_account.bank_name}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.bank_account.bank_name.city}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.bank_account.account_number}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.bank_account.account_holder_name}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.transaction_id}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.amount}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-status badge badge-danger badge-pill badge-sm">{{withdrawal.description}}
+                                                      </div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.account_dr}}</div>
+                                                  </td>
+
+                                                  <td class="align-middle">
+                                                      <div class="ac-type">{{withdrawal.account_cr}}</div>
+                                                  </td>
+
+                                                      <td class="align-middle">
+                                                          <div class="action">
+                                                              <a href="bank-add-account.html"><i class="la la-eye success"></i></a>
+                                                              <a href="{% url 'bank:edit-withdrawal' withdrawal.pk %}"><i class="la la-pencil-square ml-1 success"></i></a>
+                                                              <a href="#"><i class="la la-trash ml-1 danger"></i></a>
+                                                          </div>
+                                                      </td>
+                                                  </tr>
+
+                                                {%  endfor %}
+                                              </tbody>
+
+                                              <tfoot>
+                                                <tr>
+                                                    <th class="border-top-0">Date</th>
+                                                    <th class="border-top-0">Type</th>
+                                                    <th class="border-top-0">Bank</th>
+                                                    <th class="border-top-0">Branch</th>
+                                                    <th class="border-top-0">A/c Number</th>
+                                                    <th class="border-top-0">Holder Name</th>
+                                                    <th class="border-top-0">Transaction Id</th>
+                                                    <th class="border-top-0">{{total_withdrawals}}</th>
+
+                                                </tr>
+                                              </tfoot>
+                                              </table>
+                                              </div>
+                                              </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </section>
+
+
+                                      <section id="base-style">
+                                          <div class="row">
+                                              <div class="col-12">
+                                                  <div class="card">
+                                                      <div class="card-header">
+                                                          <h4 class="card-title float-left">
+                                                              Bank Charges Details
+                                                          </h4>
+                                                          <div class="float-right">
+                                                              <a href="{% url 'bank:add-bank-charges' %}" class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white">
+                                                                  <i class="ft-plus white"></i> Bank Charges
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                      <div class="card-body mt-1">
+                                                          <div class="table-responsive">
+                                                              <table id="active-deposit" class="table alt-pagination table-wrapper">
+                                                                  <thead>
+                                                                      <tr>
+                                                                          <th class="border-top-0">Date</th>
+                                                                          <th class="border-top-0">Type</th>
+                                                                          <th class="border-top-0">Bank</th>
+                                                                          <th class="border-top-0">Branch</th>
+                                                                          <th class="border-top-0">A/c Number</th>
+                                                                          <th class="border-top-0">Holder Name</th>
+                                                                          <th class="border-top-0">Transaction Id</th>
+                                                                          <th class="border-top-0">Amount</th>
+                                                                          <th class="border-top-0">Status</th>
+                                                                          <th class="border-top-0">Account Dr</th>
+                                                                          <th class="border-top-0">Account Cr</th>
+                                                                          <th class="border-top-0">Action</th>
+                                                                      </tr>
+                                                                  </thead>
+                                                                  <tbody>
+
+                                                                    {% for charge in bank_charges %}
+                                                                        <tr>
+
+
+                                                                          <td class="align-middle">
+                                                                              <div class="ac-type">{{charge.created}}</div>
+                                                                          </td>
+
+
+                                                                          {% if charge.account_type == 'Current' %}
+                                                                            <td class="align-middle">
+                                                                              <div class="ac-symbol current">
+                                                                                  <i class="la la-street-view"></i>
+                                                                                  {{charge.bank_account.account_type}}
+                                                                                </div>
+                                                                            </td>
+                                                                          {% elif charge.account_type == 'Savings' %}
+                                                                            <td class="align-middle">
+                                                                                <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                                                  {{charge.bank_account.account_type}}
+                                                                                </div>
+                                                                            </td>
+                                                                          {% elif charge.account_type == 'Blocked' %}
+                                                                            <td class="align-middle">
+                                                                                <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                                                  {{charge.bank_account.account_type}}
+                                                                                </div>
+                                                                            </td>
+                                                                            {% elif charge.account_type == 'Joint' %}
+                                                                            <td class="align-middle">
+                                                                                <div class="ac-symbol joint"><i class="la la-users"></i>
+                                                                                  {{charge.bank_account.account_type}}
+                                                                                </div>
+                                                                            </td>
+
+                                                                          {% elif charge.account_type == 'Loan' %}
+                                                                            <td class="align-middle">
+                                                                              <div class="ac-symbol loan">
+                                                                                  <i class="la la-money"></i>
+                                                                                  {{charge.bank_account.account_type}}
+                                                                                </div>
+
+                                                                            </td>
+
+
+                                                                        {% else %}
+                                                                            <td class="align-middle">
+                                                                                <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                                                  {{charge.bank_account.account_type}}
+                                                                                </div>
+                                                                            </td>
+                                                                        {% endif %}
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.bank_account.bank_name}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.bank_account.bank_name.city}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.bank_account.account_number}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.bank_account.account_holder_name}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.transaction_id}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.amount}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-status badge badge-danger badge-pill badge-sm">{{charge.description}}
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.account_dr}}</div>
+                                                                        </td>
+
+                                                                        <td class="align-middle">
+                                                                            <div class="ac-type">{{charge.account_cr}}</div>
+                                                                        </td>
+
+                                                                            <td class="align-middle">
+                                                                                <div class="action">
+                                                                                    <a href="bank-add-account.html"><i class="la la-eye success"></i></a>
+                                                                                    <a href="bank-add-account.html"><i class="la la-pencil-square ml-1 success"></i></a>
+                                                                                    <a href="#"><i class="la la-trash ml-1 danger"></i></a>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                      {%  endfor %}
+                                                                    </tbody>
+
+                                                                    <tfoot>
+                                                                      <tr>
+                                                                          <th class="border-top-0">Date</th>
+                                                                          <th class="border-top-0">Type</th>
+                                                                          <th class="border-top-0">Bank</th>
+                                                                          <th class="border-top-0">Branch</th>
+                                                                          <th class="border-top-0">A/c Number</th>
+                                                                          <th class="border-top-0">Holder Name</th>
+                                                                          <th class="border-top-0">Transaction Id</th>
+                                                                          <th class="border-top-0">{{total_bank_charges}}</th>
+
+                                                                      </tr>
+                                                                    </tfoot>
+                                                                    </table>
+                                                                    </div>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                              </div>
+                                                            </section>
+
+{% endblock  %}

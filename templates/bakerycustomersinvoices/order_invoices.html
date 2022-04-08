@@ -1,0 +1,198 @@
+{% extends "bankbase.html" %}
+
+{% block title %} Orders{% endblock title %}
+
+{% block breadcrumb %}
+          <div class="content-header row">
+                <div class="content-header-left col-md-6 col-12 mb-2">
+                    <h3 class="content-header-title">All Accounts</h3>
+                    <div class="row breadcrumbs-top">
+                        <div class="breadcrumb-wrapper col-12">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Account</a>
+                                </li>
+                                <li class="breadcrumb-item active">All Accounts
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right col-md-6 col-12">
+                    <div class="media width-250 float-right">
+                        <media-left class="media-middle">
+                            <div id="sp-bar-total-sales"></div>
+                        </media-left>
+                        <div class="media-body media-right text-right">
+                            <h3 class="m-0">$5,668</h3><span class="text-muted">Sales</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{% endblock breadcrumb %}
+
+{% block content %}
+
+<section id="payments-details">
+  <div class="row">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title float-left">
+                      Payment Status
+                  </h4>
+
+                  <form method="GET" action="">
+                    <div class="form-row \">
+                        <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                          <label for="inputPassword4">Start Date</label>
+                          <input type="date" class="form-control" id="#publishDateMin" name="start_date">
+                        </div>
+                        <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                          <label for="inputPassword4">End Date</label>
+                          <input type="date" class="form-control" id="#publishDateMax" name="end_date">
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                </form>
+              </div>
+          </div>
+      </div>
+    </div>
+</section>
+
+<!-- Base style table -->
+                <section id="base-style">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title float-left">
+                                        Account Details
+                                    </h4>
+                                    <div class="float-right">
+                                        <a class="btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right white" href="bank-add-account.html">
+                                            <i class="ft-plus white"></i>Add New Account
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body mt-1">
+                                    <div class="table-responsive">
+                                        <table id="active-accounts" class="table alt-pagination table-wrapper">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0"></th>
+                                                    <th class="border-top-0">Date</th>
+                                                    <th class="border-top-0">Session</th>
+                                                    <th class="border-top-0">Customer Name</th>
+                                                    <th class="border-top-0">Invoice Id</th>
+                                                    <th class="border-top-0">Product</th>
+                                                    <th class="border-top-0">Quantity</th>
+                                                    <th class="border-top-0">Price</th>
+                                                    <th class="border-top-0">Amount</th>
+
+                                                    <th class="border-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for order in orders %}
+                                                <tr>
+
+                                                  {% if order.customer.customer_type == 'Company' %}
+                                                    <td class="align-middle">
+                                                      <div class="ac-symbol current">
+                                                          <i class="la la-street-view"></i>
+                                                        </div>
+                                                    </td>
+                                                  {% elif order.customer.customer_type == 'School' %}
+                                                    <td class="align-middle">
+                                                        <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                        </div>
+                                                    </td>
+                                                  {% elif order.customer.customer_type == 'Individual' %}
+                                                    <td class="align-middle">
+                                                        <div class="ac-symbol saving"><i class="la la-suitcase"></i>
+                                                        </div>
+                                                    </td>
+
+                                                {% else %}
+                                                <td class="align-middle">
+                                                    <div class="ac-symbol joint"><i class="la la-users"></i>
+                                                    </div>
+                                                </td>
+                                                {% endif %}
+
+
+                                                    <td class="align-middle">
+                                                        <div class="ac-type">{{order.created}}</div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-number">{{order.session_of_the_day}}</div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{order.customer}}</div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">
+                                                        <a href="{{order.get_absolute_url}}">  {{order.invoice_id}} </a>
+                                                        </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{order.product}} </div>
+                                                    </td>
+
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{order.quantity}} </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{order.price}} </div>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <div class="ac-hol-name">{{order.amount}} </div>
+                                                    </td>
+
+
+                                                    <td class="align-middle">
+                                                        <div class="action">
+                                                            <a href="bank-add-account.html"><i class="la la-eye success"></i></a>
+                                                            <a href=""><i class="la la-pencil-square ml-1 success"></i></a>
+                                                            <a href="#"><i class="la la-trash ml-1 danger"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                              {%  endfor %}
+
+                                              <tfoot>
+                                                  <tr>
+                                                    <th class="border-top-0"></th>
+                                                    <th class="border-top-0">Date</th>
+                                                    <th class="border-top-0">Session</th>
+                                                    <th class="border-top-0">Customer Name</th>
+                                                    <th class="border-top-0">Invoice Id</th>
+                                                    <th class="border-top-0">Product</th>
+                                                    <th class="border-top-0">Quantity</th>
+                                                    <th class="border-top-0">Price</th>
+                                                    <th class="border-top-0"><h5 class="text-bold">{{total_orders}}</h5></th>
+
+                                                    <th class="border-top-0">Action</th>
+                                                  </tr>
+                                              </tfoot>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+{% endblock  %}

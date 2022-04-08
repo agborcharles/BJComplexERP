@@ -1,0 +1,260 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '' %}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}lib/pickadate.css">
+ {% endblock %}
+
+{% block title %} Bakery RM Damages{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+  <!-- Hospital Info cards -->
+  <!-- Hospital Info cards -->
+  <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card pull-up">
+              <div class="card-content">
+                  <div class="card-body">
+                      <div class="media d-flex">
+                          <div class="align-self-center">
+                              <i class="la la-user font-large-2 success"></i>
+                          </div>
+                          <div class="media-body text-right">
+                              <h6 class="text-muted text-bold-500">Total Sales</h6>
+                              <h3 class="text-bold-600">{{total_bakerysales|floatformat:0 }}</h3>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card pull-up">
+              <div class="card-content">
+                  <div class="card-body">
+                      <div class="media d-flex">
+                          <div class="align-self-center">
+                              <i class="la la-user font-large-2 warning"></i>
+                          </div>
+                          <div class="media-body text-right">
+                              <h6 class="text-muted text-bold-500">Total Orders</h6>
+                              <h3 class="text-bold-600">{{customer}}</h3>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card pull-up">
+              <div class="card-content">
+                  <div class="card-body">
+                      <div class="media d-flex">
+                          <div class="align-self-center">
+
+                              <i class="icon-basket-loaded info font-large-2 float-right"></i>
+                          </div>
+                          <div class="media-body text-right">
+                              <h6 class="text-muted text-bold-500">Total Boualangerie Sales</h6>
+                              <h3 class="text-bold-600">{{boulangerie_sales}} / {{current_user}}</h3>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card pull-up">
+              <div class="card-content">
+                  <div class="card-body">
+                      <div class="media d-flex">
+                          <div class="align-self-center">
+                              <i class="la la-bed font-large-2 danger"></i>
+                          </div>
+                          <div class="media-body text-right">
+                              <h6 class="text-muted text-bold-500">Total Patisserie Sales</h6>
+                              <h3 class="text-bold-600">{{patisserie_sales}}</h3>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Hospital Info cards Ends -->
+
+  <section id="payments-details">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title float-left">
+                        Employees
+                    </h4>
+
+                    <form method="GET" action="">
+                      <div class="form-row \">
+                          <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                            <label for="inputPassword4">Start Date</label>
+                            <input type="date" class="form-control" id="#publishDateMin" name="start_date">
+                          </div>
+                          <div class="form-group col-md-3 col-lg-3" data-provide="datepicker">
+                            <label for="inputPassword4">End Date</label>
+                            <input type="date" class="form-control" id="#publishDateMax" name="end_date">
+                          </div>
+                      </div>
+
+
+                      <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="row all-contacts">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-head">
+                  <div class="card-header">
+                      <h4 class="card-title">All Product Sales</h4>
+                      <div class="heading-elements mt-0">
+                        <a href="">
+                          <button class="btn btn-primary btn-sm " data-toggle="#" data-target=""><i class="d-md-none d-block ft-plus white"></i>
+                            <i class="ft-plus">Add Sale</i>
+                          </button>
+                        </a>
+
+                          <span class="dropdown">
+                              <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning dropdown-toggle dropdown-menu-right btn-sm"><i class="ft-download-cloud white"></i></button>
+                              <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
+                                  <a href="#" class="dropdown-item"><i class="ft-upload"></i> Import</a>
+                                  <a href="#" class="dropdown-item"><i class="ft-download"></i> Export</a>
+                                  <a href="#" class="dropdown-item"><i class="ft-shuffle"></i> Find Duplicate</a>
+                              </span>
+                          </span>
+                          <button class="btn btn-default btn-sm"><i class="ft-settings white"></i></button>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-content">
+                  <div class="card-body">
+                      <!-- Task List table -->
+                      <button type="button" class="btn btn-sm btn-danger delete-all mb-1">Delete All</button>
+                      <div class="table-responsive">
+                          <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                              <thead>
+                                  <tr>
+                                      <th>ID</th>
+                                      <th>Date</th>
+                                      <th>Invoice_No</th>
+                                      <th>Supplier</th>
+                                      <th>Customer</th>
+                                      <th>Product</th>
+                                      <th>Qty</th>
+                                      <th>Cost Price</th>
+                                      <th>Total Amount</th>
+                                      <th>Discount</th>
+                                      <th>Net Amount</th>
+                                      <!--<th>Actions</th> -->
+                                  </tr>
+                              </thead>
+                              <tbody>
+
+                                {% for sales in bakerysales %}
+                                  <tr>
+                                    <!--  <td>
+                                          <div class="custom-control custom-checkbox">
+                                              <input type="checkbox" class="custom-control-input" id="checkboxsmall1">
+                                              <label class="custom-control-label" for="checkboxsmall1"></label>
+                                          </div>
+                                      </td> -->
+                                      <td>
+                                              <div class="media-body media-middle">
+                                                  <a   class="media-heading name">{{sales.id}}</a>
+                                              </div>
+                                      </td>
+                                      <td>
+                                              <div class="media-body media-middle">
+                                                  <a   class="media-heading name">{{sales.created_at}}</a>
+                                              </div>
+                                      </td>
+                                      <td>
+                                              <div class="media-body media-middle">
+                                                  <a href="{{vendor.get_absolute_url}}" class="media-heading name">{{sales.invoice_id}}</a>
+                                              </div>
+                                      </td>
+                                      <td class="text-center">
+                                          <a class="email" href="mailto:email@example.com">{{sales.supplier}}</a>
+                                      </td>
+                                      <td class="phone">{{sales.customer}}</td>
+                                      <td class="phone">{{sales.product}}</td>
+                                      <td class="phone">{{sales.qty}}</td>
+                                      <td class="phone">{{sales.cost_price}}</td>
+                                      <td class="phone">{{sales.total_amount}}</td>
+                                      <td class="phone">{{sales.discount_value}}</td>
+                                      <td class="phone">{{sales.net_amount}}</td>
+                                      <!--<td>
+                                          <a href="" class="primary edit mr-1"><i class="la la-pencil"></i></a>
+                                          <a href="{{vendor.get_absolute_url}}" class=""><i class="la la-eye"></i></a>
+                                          <span class="dropdown">
+                                              <a id="btnSearchDrop2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="la la-ellipsis-v"></i></a>
+                                              <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                  <a data-toggle="modal" data-target="#EditContactModal" class="dropdown-item edit"><i class="ft-edit-2"></i>
+                                                      Edit</a>
+                                                  <a href="#" class="dropdown-item delete"><i class="ft-trash-2"></i> Delete</a>
+                                                  <a href="#" class="dropdown-item"><i class="ft-plus-circle primary"></i> Projects</a>
+                                                  <a href="#" class="dropdown-item"><i class="ft-plus-circle info"></i> Team</a>
+                                                  <a href="#" class="dropdown-item"><i class="ft-plus-circle warning"></i> Clients</a>
+                                                  <a href="#" class="dropdown-item"><i class="ft-plus-circle success"></i> Friends</a>
+                                              </span>
+                                          </span>
+                                      </td> -->
+                                  </tr>
+                                  {% endfor %}
+
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Invoice_No</th>
+                                    <th>Supplier</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Cost Price</th>
+                                    <th>Total Amount</th>
+                                    <th>Discount</th>
+                                    <th>Net Amount</th>
+                                    <!--<th>Actions</th> -->
+                                  </tr>
+                              </tfoot>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+</div>
+
+{% endblock content %}
+  <script src="{% static '' %}lib/picker.js"></script>
+  <script src="{% static '' %}lib/picker.date.js"></script>
+  <script src="{% static '' %}lib/legacy.js"></script>
+
+  <script type="text/javascript">
+      $("#id_due_date").pickadate({format: 'yyyy-mm-dd' }).val();
+</script>
+
+{% block script %}
+
+ {% endblock %}
