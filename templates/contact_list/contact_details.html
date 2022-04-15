@@ -1,0 +1,278 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '' %}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}lib/pickadate.css">
+ {% endblock %}
+
+{% block title %} {{contacts.company_name}} {% endblock title %}
+
+{% block content %}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12 mb-2">
+                <h3 class="content-header-title">Contact Details</h3>
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#">Contact</a>
+                            </li>
+                            <li class="breadcrumb-item active">Contact Details
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="content-header-right col-md-6 col-12">
+                <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+                    <button class="btn btn-info round dropdown-toggle dropdown-menu-right box-shadow-2 px-2 mb-1" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ft-settings icon-left"></i> Settings</button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"><a class="dropdown-item" href="card-bootstrap.html">Cards</a><a class="dropdown-item" href="component-buttons-extended.html">Buttons</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="content-body">
+            <section class="card">
+                <div id="invoice-template" class="card-body p-4">
+                    <!-- Invoice Company Details -->
+                    <div id="invoice-company-details" class="row">
+                        <div class="col-sm-6 col-12 text-center text-sm-left">
+                            <div class="media row">
+                                <div class="col-12 col-sm-3 col-xl-2">
+                                    <img src="{% static '' %}app-assets/images/logo/logo-80x80.png" alt="company logo" class="mb-1 mb-sm-0" />
+                                </div>
+                                <div class="col-12 col-sm-9 col-xl-10">
+                                    <div class="media-body">
+                                        <ul class="ml-2 px-0 list-unstyled">
+                                            <li class="text-bold-800 font-weight-bold"><h3 class="font-weight-bold">{{contacts.company_name}}</h3></li>
+                                            <li><i class="la la-user"></i> Representative: {{contacts.name}}</li>
+                                            <li><i class="la la-home"></i> Company Type: {{contacts.contact_type}}</li>
+                                            <li><i class="la la-map-marker"> </i> {{contacts.company_name}}</li>
+                                            <li>South West Region, Cameroon</li>
+                                            <li>Tel: +237 675 275 201 / 698 658 452</li>
+                                            <li>Email: bjcomplex@gmailcom</li>
+                                            <li>website: www.bjcomplex.com</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-right">
+                          <h2>Contact Information</h2>
+                          <li><i class="la la-phone"></i> Contact: {{contacts.phone}} / {{contacts.phone}}</li>
+                          <li><i class="la la-email"> </i> {{contacts.company_name}}</li>
+
+
+                        </div>
+                    </div>
+                    <!-- Invoice Company Details -->
+
+                    <!-- Invoice Customer Details -->
+                <!--    <div id="invoice-customer-details" class="row pt-2">
+                        <div class="col-12 text-center text-sm-left">
+                            <p class="text-muted">Bill To</p>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-left">
+                            <ul class="px-0 list-unstyled">
+                                <li class="text-bold-800 font-weight-bold">Employee Name : {{salaries.employee}}</li>
+                                <li>ID Card No : {{salaries.employee.id_card_number}}</li>
+                                <li>Tel : {{salaries.employee.tel}}</li>
+                                <li>Email : {{salaries.employee.email}}</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-12 text-center text-sm-right">
+                            <p><span class="text-muted">Invoice Date :</span> 06/05/2019</p>
+                            <p><span class="text-muted">Terms :</span> Due on Receipt</p>
+                            <p><span class="text-muted">Due Date :</span> 10/05/2019</p>
+                        </div>
+                    </div>
+
+                  -->
+                    <!-- Invoice Customer Details -->
+
+                    <!-- Invoice Items Details -->
+                    <div id="invoice-items-details" class="pt-2">
+                        <div class="row">
+                          <div class="col-sm-7 col-12 text-center text-sm-left">
+                              <p class="lead font-weight-bold">Earnings:</p>
+                              <div class="row">
+                                  <div class="col-sm-8">
+                                      <div class="table-responsive">
+                                          <table class="table table-sm">
+                                              <tbody>
+                                                  <tr>
+                                                      <td>Base Salary:</td>
+                                                      <td class="text-right">{{salaries.base_salary}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Housing Allowance:</td>
+                                                      <td class="text-right">{{salaries.housing_allowance}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Fedding Allowance:</td>
+                                                      <td class="text-right">{{salaries.feeding_allowance}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Transport Allowance:</td>
+                                                      <td class="text-right">{{salaries.transport_allowance}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Water Bill Allowance:</td>
+                                                      <td class="text-right">{{salaries.water_allowance}}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td>Electricity Allowance Allowance:</td>
+                                                      <td class="text-right">{{salaries.light_allowance}}</td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-5 col-12">
+                              <p class="lead font-weight-bold">Deductions:</p>
+                              <div class="table-responsive">
+                                  <table class="table">
+                                      <tbody>
+                                          <tr>
+                                              <td>Income Tax:</td>
+                                              <td class="text-right">{{salaries.income_tax}}</td>
+                                          </tr>
+                                          <tr>
+                                              <td>Social Insurance:</td>
+                                              <td class="text-right">{{salaries.national_social_insurance}}</td>
+                                          </tr>
+                                          <tr>
+                                              <td class="text-bold-800">Other Deductions</td>
+                                              <td class="text-bold-800 text-right">{{salaries.expenses}}</td>
+                                          </tr>
+                                          <tr class="bg-grey bg-lighten-4">
+                                              <td class="text-bold-800 font-weight-bold">Total Deductions:</td>
+                                              <td class="text-bold-800 text-right font-weight-bold">{{salaries.total_deductions}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-7 col-12 text-center text-sm-left">
+                                <p class="lead font-weight-bold">Other Earnings:</p>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Overtime:</td>
+                                                        <td class="text-right">{{salaries.overtime}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Commission/Bonuses:</td>
+                                                        <td class="text-right">{{salaries.commission_and_bonus}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Expenses:</td>
+                                                        <td class="text-right">{{salaries.expenses}}</td>
+                                                    </tr>
+                                                    <tr class="bg-grey bg-lighten-4">
+                                                        <td class="text-bold-800 font-weight-bold">Total Earnings:</td>
+                                                        <td class="text-bold-800 text-right font-weight-bold">{{salaries.total_earnings}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="mb-0 mt-1">Employee Name</p>
+                                            <img src="{% static '' %}app-assets/images/pages/signature-scan.png" alt="signature" class="height-100" />
+                                            <h6 class="font-weight-bold">{{salaries.employee}}</h6>
+                                            <p class="text-muted">{{salaries.employee.role}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-12">
+                                <p class="lead font-weight-bold">Summary</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="font-weight-bold">Total Earnings:</td>
+                                                <td class="text-right font-weight-bold">{{salaries.total_earnings}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold danger">Total Deductions:</td>
+                                                <td class="text-right font-weight-bold danger">({{salaries.total_deductions}})</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-bold-800 font-weight-bold">Total Amount to Paid:</td>
+                                                <td class="text-bold-800 text-right font-weight-bold">{{salaries.total_expected_amount_to_paid}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="font-weight-bold success">Amount Paid:</td>
+                                                <td class="text-right success font-weight-bold">{{salaries.total_amount_paid}}</td>
+                                            </tr>
+                                            <tr class="bg-grey bg-lighten-4 info font-weight-bold">
+                                                <td class="text-bold-800">Arrears:</td>
+                                                <td class="text-bold-800 text-right">{{salaries.arrears}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center">
+                                    <p class="mb-0 mt-1">Authorized Personnels</p>
+                                    <img src="{% static '' %}app-assets/images/pages/signature-scan.png" alt="signature" class="height-100" />
+                                    <h6 class="font-weight-bold">Kaba Alex & Nkongho Joseph A</h6>
+                                    <p class="text-muted">Managing Director & HR Manager</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Footer -->
+                    <div id="invoice-footer">
+                        <div class="row">
+                            <div class="col-sm-7 col-12 text-center text-sm-left">
+                                <h6>Terms & Condition</h6>
+                                <p>Test pilot isn't always the healthiest business.</p>
+                            </div>
+                            <div class="col-sm-5 col-12 text-center">
+                                <button type="button" class="btn btn-info btn-print btn-lg my-1"><i class="la la-paper-plane-o mr-50"></i>
+                                    Print
+                                    Invoice</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Invoice Footer -->
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+<!-- END: Content-->
+</div>
+
+{% endblock content %}
+  <script src="{% static '' %}lib/picker.js"></script>
+  <script src="{% static '' %}lib/picker.date.js"></script>
+  <script src="{% static '' %}lib/legacy.js"></script>
+
+  <script type="text/javascript">
+      $("#id_due_date").pickadate({format: 'yyyy-mm-dd' }).val();
+</script>
+
+{% block script %}
+
+ {% endblock %}

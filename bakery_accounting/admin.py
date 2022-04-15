@@ -4,6 +4,20 @@ from import_export.admin import ImportExportModelAdmin
 
 
 # Register your models here.
+class QuarterAdmin(ImportExportModelAdmin):
+    list_display = ['id', 'quarter_name', ]
+    list_display_links = ['id', 'quarter_name', ]
+    list_per_page =200
+
+class BakeryCustomersAdmin(ImportExportModelAdmin):
+    list_display = ['id', 'created_at', 'customer','busness_type','quarter',
+    'street','phone_1','phone_2',  'address', 'road_street_location',]
+    #search_fields = ['supplier__startswith', 'product__startswith', ]
+    list_display_links = ['id', 'customer','busness_type','phone_1',]
+    list_per_page =200
+    #list_filter = ('created_at', 'supplier', 'product' )
+    #list_editable = ( 'qty', 'unit_cost_price', )
+
 class BakeryRmReturnsAdmin(ImportExportModelAdmin):
     list_display = ['id', 'created_at', 'department','return_manager','supplier',
     'return_id', 'product','qty', 'unit_cost_price', 'total_cost_price',]
@@ -65,13 +79,12 @@ class BakeryOpeningBalancesAdmin(ImportExportModelAdmin):
 
 
 class BakeryPaymentAdmin(ImportExportModelAdmin):
-    list_display = ['id', 'created_at','collector','payment_id', 'session','customer',
-    'department', 'amount',
-    ]
+    list_display = ['id', 'created_at','department', 'quarter', 'street','collector','payment_id',
+     'session','customer', 'amount', 'payment_mode', ]
     search_fields = ['customer__startswith', 'collector__startswith',]
-    list_display_links = ['id', 'created_at', 'customer', 'department',]
+    list_display_links = ['id', 'created_at', 'customer', 'department', 'payment_mode', ]
     list_per_page =200
-    list_filter = ('created_at', 'department','customer',)
+    list_filter = ('created_at', 'department', 'payment_mode', )
     list_editable = ( 'payment_id', 'amount')
 
 
@@ -87,7 +100,8 @@ class BakerySalesAdmin(ImportExportModelAdmin):
     'category', 'product')
     list_editable = ( 'invoice_id',)
 
-
+admin.site.register(Quarter, QuarterAdmin)
+admin.site.register(BakeryCustomers, BakeryCustomersAdmin)
 admin.site.register(BakeryReturn, BakeryReturnAdmin)
 admin.site.register(BakeryOpeningBalances, BakeryOpeningBalancesAdmin)
 admin.site.register(BakeryPayment, BakeryPaymentAdmin)

@@ -1,0 +1,150 @@
+
+{% extends "base2.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static '' %}bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '' %}lib/pickadate.css">
+ {% endblock %}
+
+{% block title %} Contact List{% endblock title %}
+
+{% block content %}
+
+<div class="content-body">
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-body">
+                      <div class="bug-list-search">
+                          <div class="bug-list-search-content">
+                              <div class="sidebar-toggle d-block d-lg-none"><i class="ft-menu font-large-1"></i></div>
+                              <form action="#">
+                                  <div class="position-relative">
+                                      <input type="search" id="search-contacts" class="form-control" placeholder="Search contacts...">
+                                      <div class="form-control-position">
+                                          <i class="la la-search text-size-base text-muted la-rotate-270"></i>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <section class="row all-contacts">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-head">
+                      <div class="card-header">
+                          <h4 class="card-title">All Contacts</h4>
+                          <div class="heading-elements mt-0">
+                              <button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#AddContactModal"><i class="d-md-none d-block ft-plus white"></i>
+                                  <span class="d-md-block d-none">Add Contacts</span></button>
+                              <span class="dropdown">
+                                  <button id="btnSearchDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="btn btn-warning dropdown-toggle dropdown-menu-right btn-sm"><i class="ft-download-cloud white"></i></button>
+                                  <span aria-labelledby="btnSearchDrop1" class="dropdown-menu mt-1 dropdown-menu-right">
+                                      <a href="#" class="dropdown-item"><i class="ft-upload"></i> Import</a>
+                                      <a href="#" class="dropdown-item"><i class="ft-download"></i> Export</a>
+                                      <a href="#" class="dropdown-item"><i class="ft-shuffle"></i> Find Duplicate</a>
+                                  </span>
+                              </span>
+                              <button class="btn btn-default btn-sm"><i class="ft-settings white"></i></button>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-content">
+                      <div class="card-body">
+                          <!-- Task List table -->
+                          <button type="button" class="btn btn-sm btn-danger delete-all mb-1">Delete All</button>
+                          <div class="table-responsive">
+                              <table id="users-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle text-center">
+                                  <thead>
+                                      <tr>
+                                          <th>Name</th>
+                                          <th>Company</th>
+                                          <th>Category</th>
+                                          <th>Quarter</th>
+                                          <th>City</th>
+                                          <th>Region</th>
+                                          <th>Phone</th>
+                                          <th>Actions</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+
+                                    {% for con in contacts %}
+                                      <tr>
+                                          <td>
+                                             <div class="media">
+                                                  <!-- <div class="media-left pr-1"><span class="avatar avatar-sm avatar-online rounded-circle"><img src="{% static '' %}app-assets/images/portrait/small/avatar-s-2.png" alt="avatar"><i></i></span></div> -->
+                                                  <div class="media-body media-middle">
+                                                      <a href="{{ con.get_absolute_url }}" class="media-heading name">{{con.name}}</a>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                          <td class="text-center">
+                                              <a class="email" href="{{ con.get_absolute_url }}">{{con.company_name}}</a>
+                                          </td>
+                                          <td class="phone">{{con.category}}</td>
+                                          <td class="text-center">{{con.quarter}}</td>
+                                          <td class="text-center">{{con.city}}</td>
+                                          <td class="text-center">{{con.region}}</td>
+                                          <td class="text-center">{{con.phone}}</td>
+                                          <td>
+                                              <a data-toggle="modal" data-target="#EditContactModal" class="primary edit mr-1"><i class="la la-pencil"></i></a>
+                                              <a class="danger delete mr-1"><i class="la la-trash-o"></i></a>
+                                              <span class="dropdown">
+                                                  <a id="btnSearchDrop2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" class="dropdown-toggle dropdown-menu-right"><i class="la la-ellipsis-v"></i></a>
+                                                  <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                      <a data-toggle="modal" data-target="#EditContactModal" class="dropdown-item edit"><i class="ft-edit-2"></i>
+                                                          Edit</a>
+                                                      <a href="#" class="dropdown-item delete"><i class="ft-trash-2"></i> Delete</a>
+                                                      <a href="#" class="dropdown-item"><i class="ft-plus-circle primary"></i> Projects</a>
+                                                      <a href="#" class="dropdown-item"><i class="ft-plus-circle info"></i> Team</a>
+                                                      <a href="#" class="dropdown-item"><i class="ft-plus-circle warning"></i> Clients</a>
+                                                      <a href="#" class="dropdown-item"><i class="ft-plus-circle success"></i> Friends</a>
+                                                  </span>
+                                              </span>
+                                          </td>
+                                      </tr>
+                                  {% endfor %}
+
+                                  </tbody>
+                                  <tfoot>
+                                      <tr>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Category</th>
+                                        <th>Quarter</th>
+                                        <th>City</th>
+                                        <th>Region</th>
+                                        <th>Phone</th>
+                                        <th>Actions</th>
+                                      </tr>
+                                  </tfoot>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+</div>
+
+{% endblock content %}
+  <script src="{% static '' %}lib/picker.js"></script>
+  <script src="{% static '' %}lib/picker.date.js"></script>
+  <script src="{% static '' %}lib/legacy.js"></script>
+
+  <script type="text/javascript">
+      $("#id_due_date").pickadate({format: 'yyyy-mm-dd' }).val();
+</script>
+
+{% block script %}
+
+ {% endblock %}

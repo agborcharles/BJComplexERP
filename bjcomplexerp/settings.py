@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     #'core.apps.CoreConfig',
 
     'configurations.apps.ConfigurationsConfig',
+    'procurement.apps.ProcurementConfig',
+    'contact_list.apps.ContactListConfig',
     'general_ledger.apps.GeneralLedgerConfig',
     'task.apps.TaskConfig',
     'purchase.apps.PurchaseConfig',

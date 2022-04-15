@@ -28,6 +28,8 @@ urlpatterns = [
     path('payroll/', include('payroll.urls', namespace='payroll')),
     path('bakery_accounting/', include('bakery_accounting.urls', namespace='bakery_accounting')),
     path('general_ledger/', include('general_ledger.urls', namespace='general_ledger')),
+    path('procurement/', include('procurement.urls', namespace='procurement')),
+    path('contact_list/', include('contact_list.urls', namespace='contact_list')),
 
 
 ]
