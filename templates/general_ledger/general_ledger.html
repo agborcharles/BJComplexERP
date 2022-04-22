@@ -161,7 +161,7 @@
                                       <th>Department</th>
                                       <th>Employee/MGT</th>
                                       <th>Transaction Id</th>
-                                      <th>Reference Id</th>
+                                      <th>Employee</th>
                                       <th>Institution</th>
                                       <th>Description</th>
                                       <th>Amount</th>
@@ -207,11 +207,11 @@
                                       </td>
                                       <td>
                                               <div class="media-body media-middle">
-                                                  <a href="{{ trans.get_absolute_url }}" class="media-heading name">{{trans.reference_id}}</a>
+                                                  <a href="{{ trans.get_absolute_url }}" class="media-heading name">{{trans.employee}}</a>
                                               </div>
                                       </td>
                                       <td class="phone">{{trans.institution}}</td>
-                                      <td class="phone">{{trans.description|slice:":10" }}</td>
+                                      <td class="phone">  <a href="{{ trans.get_absolute_url }}">{{trans.description|slice:":10" }}</a></td>
                                       <td class="phone">{{trans.amount|floatformat:0 }}</td>
                                       <td class="phone">{{trans.accounts_dr }}</td>
                                       <td class="phone">{{trans.accounts_cr}}</td>
@@ -242,7 +242,7 @@
                                     <th>Department</th>
                                     <th>Employee/MGT</th>
                                     <th>Transaction Id</th>
-                                    <th>Reference Id</th>
+                                    <th>Employee</th>
                                     <th>Institution</th>
                                     <th>Description</th>
                                     <th>Amount</th>
