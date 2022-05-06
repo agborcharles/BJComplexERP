@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'payroll.apps.PayrollConfig',
     'bakery_accounting.apps.BakeryAccountingConfig',
     'supermarket.apps.SupermarketConfig',
+    'boulangerie.apps.BoulangerieConfig',
 
 
     'django.contrib.admin',

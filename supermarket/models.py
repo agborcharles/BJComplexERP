@@ -26,7 +26,7 @@ class SupermarketProducts(models.Model):
 class SupermarketPurchases(models.Model):
     created_at = models.DateField("Date", default=now)
     department =  models.CharField(max_length = 500, default='Supermarket', null = True, blank = True, verbose_name = 'Department')
-    sales_person =  models.CharField(max_length=200, verbose_name = 'Sales Person')
+    invoice_id =  models.CharField(max_length=200, null = True, blank = True, verbose_name = 'Invoice Id')
     category = models.CharField(max_length=200, null = True, blank = True, verbose_name = "Category")
     product =  models.CharField(max_length=200, verbose_name = 'Product')
     qty=  models.FloatField(default=0.0, verbose_name = 'Quantity')
@@ -60,7 +60,7 @@ class SupermarketPurchases(models.Model):
         self.gross_profit= self.get_gross_profit
         self.margin= self.get_margin
 
-        super(SupermarketSales, self).save(*args, **kwargs)
+        super(SupermarketPurchases, self).save(*args, **kwargs)
 
     #def get_absolute_url(self):
         #return reverse('general_ledger:transaction-details', args=[self.slug])
@@ -117,7 +117,7 @@ class SupermarketInventory(models.Model):
         self.gross_profit= self.get_gross_profit
         self.margin= self.get_margin
 
-        super(SupermarketSales, self).save(*args, **kwargs)
+        super(SupermarketInventory, self).save(*args, **kwargs)
 
     #def get_absolute_url(self):
         #return reverse('general_ledger:transaction-details', args=[self.slug])
