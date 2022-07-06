@@ -373,7 +373,7 @@ class edit_bakery_opening_bal(SuccessMessageMixin, UpdateView):
 
 #----------------------------- Bakery Inventory View ----------------------#
 def bakery_inventory_view(request):
-    bakery_inventory = BakeryInventory.objects.all()
+    bakery_inventory = BakeryInventoryMagazine.objects.all()
 
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
@@ -402,7 +402,7 @@ def bakery_inventory_view(request):
 
 #----------------------------- Bakery Add SalesView  and Edit View ----------------------#
 class add_bakery_inventory(SuccessMessageMixin, CreateView):
-    model = BakeryInventory
+    model = BakeryInventoryMagazine
     template_name = 'bakery_accounting/bakery_inventory/forms/add_bakery_inventory.html'
     fields = '__all__'
     exclude = ('slug',)
@@ -410,7 +410,7 @@ class add_bakery_inventory(SuccessMessageMixin, CreateView):
     success_message = 'Inventory Successfully Edited !!!'
 
 class edit_bakery_inventory(SuccessMessageMixin, UpdateView):
-    model = BakeryInventory
+    model = BakeryInventoryMagazine
     template_name = 'bakery_accounting/bakery_inventory/forms/edit_bakery_inventory.html'
     fields = '__all__'
     exclude = ('slug',)

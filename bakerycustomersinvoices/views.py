@@ -16,6 +16,7 @@ from . models import *
 from . forms import *
 # Create your views here.
 
+'''
 def customers_view(request):
     customers = Customer.objects.all()
 
@@ -52,3 +53,4 @@ def customer_details(request, slug):
                 }
 
     return render(request, template_name, context)
+'''

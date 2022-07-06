@@ -114,9 +114,9 @@ class BoulangerieInventory(models.Model):
 
     created_at = models.DateField("Date", default=now)
     session =  models.CharField(max_length = 500, choices=SESSIONS, default='', null = True, blank = True, verbose_name = 'Session')
+    stock_status =  models.CharField(max_length = 500, choices=STOCKSTATUS, default='', null = True, blank = True, verbose_name = 'Stock Status')
     department =  models.CharField(max_length = 500, choices=DEPARTMENTS, default='Boualangerie', null = True, blank = True, verbose_name = 'Department')
     employee =  models.CharField(max_length = 500, default='', null = True, blank = True, verbose_name = 'Employee')
-    stock_status =  models.CharField(max_length = 500, choices=STOCKSTATUS, default='', null = True, blank = True, verbose_name = 'Stock Status')
     sub_department =  models.CharField(max_length = 500, choices=SUBDEPARTMENTS, default='', null = True, blank = True, verbose_name = 'Sub Department')
     product =  models.CharField(max_length=200, verbose_name = 'Product')
     qty=  models.FloatField(default=0.0, verbose_name = 'Quantity')

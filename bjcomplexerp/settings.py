@@ -41,12 +41,12 @@ INSTALLED_APPS = [
     'general_ledger.apps.GeneralLedgerConfig',
     'task.apps.TaskConfig',
     'purchase.apps.PurchaseConfig',
-    'bakerycustomersinvoices.apps.BakerycustomersinvoicesConfig',
+    #'bakerycustomersinvoices.apps.BakerycustomersinvoicesConfig',
     'bank.apps.BankConfig',
-    'payroll.apps.PayrollConfig',
     'bakery_accounting.apps.BakeryAccountingConfig',
     'supermarket.apps.SupermarketConfig',
     'boulangerie.apps.BoulangerieConfig',
+    'employee.apps.EmployeeConfig',
 
 
     'django.contrib.admin',

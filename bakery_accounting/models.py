@@ -9,6 +9,31 @@ from django.template.defaultfilters import slugify
 
 
 # Create your models here.
+#------------------------------------------------------------------------------------------------#
+class RawMaterials(models.Model):
+
+    CATEGORY = (
+        ('Direct', 'Direct'),
+        ('Indirect', 'Indirect'),
+    )
+
+    product =  models.CharField(max_length = 500, default='', null = True, blank = True, verbose_name = 'Product Name')
+    category=  models.CharField(max_length = 500, choices=CATEGORY, default='Direct', null = True, blank = True, verbose_name = 'Category')
+    weight_pack =  models.CharField(max_length=200, verbose_name = 'Weight/Pack')
+    entry_measure =  models.CharField(max_length=200, verbose_name = 'Entry Measure')
+    cost_price = models.FloatField(default=0.0, verbose_name = 'Unit Cost Price')
+    packaging =  models.CharField(max_length = 500, default='', null = True, blank = True, verbose_name = 'Packaging')
+
+
+    def __str__(self):
+        return self.product
+
+    class Meta():
+        verbose_name = 'Products Raw Material'
+        verbose_name_plural = 'Products Raw Materials'
+
+#------------------------------------------------------------------------------------------------#
+
 class Quarter(models.Model):
 
     quarter_name =  models.CharField(max_length = 500,  null = True, blank = True, verbose_name = 'Cquarter_name')
@@ -52,61 +77,6 @@ class BakeryCustomers(models.Model):
 
 
 # Create your models here.
-class BakeryRmReturns(models.Model):
-    DEPARTMENTS = (
-        ('Bakery', 'Bakery'),
-    )
-
-    CATEGORY = (
-        ('Direct', 'Direct'),
-        ('Indirect', 'Indirect'),
-    )
-
-    created_at = models.DateField("Date", default=now)
-
-    department =  models.CharField(max_length = 500, choices=DEPARTMENTS, default='Bakery', null = True, blank = True, verbose_name = 'Department')
-    return_manager =  models.CharField(max_length=200, verbose_name = 'Procuement Manager')
-    location =  models.CharField(max_length=200, verbose_name = 'Location')
-    return_id = models.CharField(max_length=200, null = True, blank = True, verbose_name = "Purchase Invoice Id")
-    supplier =  models.CharField(max_length=200, verbose_name = 'Supplier')
-    category=  models.CharField(max_length = 500, choices=CATEGORY, default='Direct', null = True, blank = True, verbose_name = 'Category')
-    entry_measure =  models.CharField(max_length=200, verbose_name = 'Entry Measure')
-    weight_pack =  models.CharField(max_length=200, verbose_name = 'Weight/Pack')
-    product = models.CharField(max_length=200, verbose_name = 'Product')
-    qty = models.FloatField(default=0.0, verbose_name = 'Quantity')
-    unit_cost_price = models.FloatField(default=0.0, verbose_name = 'Unit Cost Price')
-    total_cost_price = models.FloatField(default=0.0, verbose_name = 'Total Cost Price')
-
-
-    @property
-    def get_total_cost_price(self):
-        return self.qty * self.unit_cost_price
-
-    #@property
-    #def get_discount_amount(self):
-        #return self.discount * self.qty
-
-
-    #@property
-    #def get_net_amount(self):
-        #return self.net_amount - self.total_amount_paid
-    #---------------- Value Calculations -----------------#
-
-    def save(self, *args, **kwargs):
-        self.total_cost_price= self.get_total_cost_price
-        #self.discount_value = self.get_discount_amount
-        #self.net_amount = self.total_amount - self.discount_value
-
-        super(BakeryRmReturns, self).save(*args, **kwargs)
-
-
-    def __str__(self):
-        return self.product
-
-    class Meta():
-        verbose_name = 'Bakery Raw Material Return'
-        verbose_name_plural = 'Bakery Raw Material Returns'
-        ordering: ['date']
 
 
 class BakeryRmDamages(models.Model):
@@ -169,13 +139,22 @@ class BakeryPurchase(models.Model):
         ('Indirect', 'Indirect'),
     )
 
+    Stock_STATUS = (
+        ('Return Inwards', 'Return Inwards'),
+        ('Return Outwards', 'Return Outwards'),
+        ('Damages', 'Damages'),
+        ('Purchases', 'Purchases'),
+    )
+
     created_at = models.DateField("Date", default=now)
 
     department =  models.CharField(max_length = 500, choices=DEPARTMENTS, default='Bakery', null = True, blank = True, verbose_name = 'Department')
     procuement_manager =  models.CharField(max_length=200, verbose_name = 'Procuement Manager')
     purchase_id = models.CharField(max_length=200, null = True, blank = True, verbose_name = "Purchase Invoice Id")
+    location = models.CharField(max_length=200, null = True, blank = True, verbose_name = "Location")
     supplier =  models.CharField(max_length=200, verbose_name = 'Supplier')
-    category=  models.CharField(max_length = 500, choices=CATEGORY, default='Direct', null = True, blank = True, verbose_name = 'Category')
+    stock_status =  models.CharField(max_length = 500, choices=Stock_STATUS, default='', null = True, blank = True, verbose_name = 'Stock Status')
+    category=  models.CharField(max_length = 500, choices=CATEGORY, default='Direct', null = True, blank = True, verbose_name = 'Location')
     entry_measure =  models.CharField(max_length=200, verbose_name = 'Entry Measure')
     weight_pack =  models.CharField(max_length=200, verbose_name = 'Weight/Pack')
     product = models.CharField(max_length=200, verbose_name = 'Product')
@@ -209,9 +188,9 @@ class BakeryPurchase(models.Model):
         verbose_name = 'Bakery Purchase'
         verbose_name_plural = 'Bakery Purchases'
         ordering: ['date']
+#---------------------------------------------------------------------#
+class BakeryMagazineDistribution(models.Model):
 
-
-class BakeryInventory(models.Model):
     DEPARTMENTS = (
         ('Bakery', 'Bakery'),
     )
@@ -219,7 +198,73 @@ class BakeryInventory(models.Model):
     SUBDEPARTMENTS = (
         ('Boulangerie Morning', 'Boulangerie Morning'),
         ('Boulangerie Evening', 'Boulangerie Evening'),
-        ('Patisserie', 'Patisserie'),
+        ('Patisserie Morning', 'Patisserie Morning'),
+        ('Patisserie Evening', 'Patisserie Evening'),
+
+    )
+
+    CATEGORY = (
+        ('Direct', 'Direct'),
+        ('Indirect', 'Indirect'),
+    )
+
+    created_at = models.DateField("Date", default=now)
+
+    department =  models.CharField(max_length = 500, choices=DEPARTMENTS, default='Bakery', null = True, blank = True, verbose_name = 'Department')
+    sub_department =  models.CharField(max_length = 500, choices=SUBDEPARTMENTS, default='', null = True, blank = True, verbose_name = 'Sub Department')
+    sub_department_manager =  models.CharField(max_length=200, null = True, blank = True, verbose_name = 'Sub Department Manager')
+    distribution_id = models.CharField(max_length=200, null = True, blank = True, verbose_name = "Distribution Id")
+    stock_manager =  models.CharField(max_length=200, null = True, blank = True, verbose_name = 'Stock Manager')
+    category=  models.CharField(max_length = 500, choices=CATEGORY, default='Direct', null = True, blank = True, verbose_name = 'Category')
+    entry_measure =  models.CharField(max_length=200, verbose_name = 'Entry Measure')
+    weight_pack =  models.CharField(max_length=200, verbose_name = 'Weight/Pack')
+    product = models.CharField(max_length=200, verbose_name = 'Product')
+    qty = models.FloatField(default=0.0, verbose_name = 'Quantity')
+    unit_cost_price = models.FloatField(default=0.0, verbose_name = 'Unit Cost Price')
+    total_cost_price = models.FloatField(default=0.0, verbose_name = 'Total Cost Price')
+
+
+    @property
+    def get_total_cost_price(self):
+        return self.qty * self.unit_cost_price
+
+    #@property
+    #def get_discount_amount(self):
+        #return self.discount * self.qty
+
+    #---------------- Value Calculations -----------------#
+
+    def save(self, *args, **kwargs):
+        self.total_cost_price= self.get_total_cost_price
+        #self.discount_value = self.get_discount_amount
+        #self.net_amount = self.total_amount - self.discount_value
+
+        super(BakeryMagazineDistribution, self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.product
+
+    class Meta():
+        verbose_name = 'Bakery Magazine Distribution'
+        verbose_name_plural = 'Bakery Magazine Distribution'
+        ordering: ['date']
+
+#----------------------------------------------------------------#
+
+#----------------------------------------------------------------#
+class BakeryInventoryMagazine(models.Model):
+    DEPARTMENTS = (
+        ('Bakery', 'Bakery'),
+    )
+
+    SUBDEPARTMENTS = (
+        ('Boulangerie Morning', 'Boulangerie Morning'),
+        ('Boulangerie Evening', 'Boulangerie Evening'),
+        ('Patisserie Morning', 'Patisserie Morning'),
+        ('Patisserie Evening', 'Patisserie Evening'),
+        ('Magazine', 'Magazine'),
+
     )
     STATUS = (
         ('Opening Stock', 'Opening Stock'),
@@ -264,15 +309,201 @@ class BakeryInventory(models.Model):
 
     def save(self, *args, **kwargs):
         self.total_cost_price= self.get_total_cost_price
-        super(BakeryInventory, self).save(*args, **kwargs)
+        super(BakeryInventoryMagazine, self).save(*args, **kwargs)
 
 
     def __str__(self):
         return self.product
 
     class Meta():
-        verbose_name = 'Bakery Inventory'
-        verbose_name_plural = 'Bakery Inventory'
+        verbose_name = 'Bakery Inventory Magazine'
+        verbose_name_plural = 'Bakery Inventory Magazine'
+        ordering: ['date']
+#--------------------------------------------------------------#
+class BakeryInventorySubDepartments(models.Model):
+    DEPARTMENTS = (
+        ('Bakery', 'Bakery'),
+    )
+
+    SUBDEPARTMENTS = (
+        ('Boulangerie Morning', 'Boulangerie Morning'),
+        ('Boulangerie Evening', 'Boulangerie Evening'),
+        ('Patisserie Morning', 'Patisserie Morning'),
+        ('Patisserie Evening', 'Patisserie Evening'),
+        ('All', 'All'),
+
+    )
+    STATUS = (
+        ('Opening Stock', 'Opening Stock'),
+        ('Closing Stock', 'Closing Stock'),
+        ('Returns', 'Returns'),
+        ('Transfer Inwards', 'Transfer Inwards'),
+        ('Transfer Outwards', 'Transfer Outwards'),
+        ('Damages', 'Damages'),
+        ('Added Stock', 'Added Stock'),
+        ('Rm Usage', 'Rm Usage'),
+
+    )
+
+    ENTRYMEASURE = (
+        ('Grams', 'Grams'),
+        ('Kg', 'Kg'),
+        ('Unit', 'Unit'),
+        ('Litre', 'Litre'),
+
+    )
+
+    DIRECT_INDIRECT = (
+        ('Direct', 'Direct'),
+        ('Indirect', 'Indirect'),
+    )
+
+
+    created_at = models.DateField("Date", default=now)
+    department =  models.CharField(max_length = 500, choices=DEPARTMENTS, default='Bakery', null = True, blank = True, verbose_name = 'Department')
+    sub_department =  models.CharField(max_length = 500, choices=SUBDEPARTMENTS, default='', null = True, blank = True, verbose_name = 'Sub Department')
+    supervisor =  models.CharField(max_length = 500,  default='', null = True, blank = True, verbose_name = 'Supervisor')
+    stock_status =  models.CharField(max_length = 500, choices=STATUS, default='', null = True, blank = True, verbose_name = 'Stock Status')
+    sub_department_transfers =  models.CharField(max_length = 500, choices=SUBDEPARTMENTS, default='', null = True, blank = True, verbose_name = 'Sub Department Transfers')
+    category = models.CharField(max_length = 500, verbose_name = 'Category', choices=DIRECT_INDIRECT, default='', null = True, blank = True,)
+    weight_per_pack = models.FloatField(default=0.0, verbose_name = 'Weight / Pack')
+    entry_measure = models.CharField(max_length = 500, verbose_name = 'Entry Measure', choices=ENTRYMEASURE, default='', null = True, blank = True,)
+    product = models.CharField(max_length=200, verbose_name = 'Product')
+    qty = models.FloatField(default=0.0, verbose_name = 'Quantity')
+    rm_total_weight_grams = models.FloatField(default=0.0, verbose_name = 'RM Total Weight (Grams)')
+    unit_cost_price = models.FloatField(default=0.0, verbose_name = 'Unit Cost Price')
+    total_cost_price = models.FloatField(default=0.0, verbose_name = 'Total Cost Price')
+
+    @property
+    def get_total_cost_price(self):
+        return self.qty * self.unit_cost_price
+    @property
+    def get_rm_total_weight_grams(self):
+        return float(self.qty) * float(self.weight_per_pack)
+
+    #@property
+    #def get_discount_amount(self):
+        #return self.discount * self.qty
+
+    #---------------- Value Calculations -----------------#
+
+    def save(self, *args, **kwargs):
+        self.total_cost_price= self.get_total_cost_price
+        self.rm_total_weight_grams= self.get_rm_total_weight_grams
+        super(BakeryInventorySubDepartments, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.product
+
+    class Meta():
+        verbose_name = 'Bakery Inventory Sub Departments'
+        verbose_name_plural = 'Bakery Inventory Sub Departments'
+        ordering: ['date']
+
+class BakeryRmUsageSubDepartments(models.Model):
+    DEPARTMENTS = (
+        ('Bakery', 'Bakery'),
+    )
+
+    SUBDEPARTMENTS = (
+        ('Boulangerie Morning', 'Boulangerie Morning'),
+        ('Boulangerie Evening', 'Boulangerie Evening'),
+        ('Patisserie Morning', 'Patisserie Morning'),
+        ('Patisserie Evening', 'Patisserie Evening'),
+        ('All', 'All'),
+
+    )
+    STATUS = (
+        ('Opening Stock', 'Opening Stock'),
+        ('Closing Stock', 'Closing Stock'),
+        ('Returns', 'Returns'),
+        ('Transfer Inwards', 'Transfer Inwards'),
+        ('Transfer Outwards', 'Transfer Outwards'),
+        ('Damages', 'Damages'),
+        ('Added Stock', 'Added Stock'),
+
+    )
+
+    ENTRYMEASURE = (
+        ('Grams', 'Grams'),
+        ('Kg', 'Kg'),
+        ('Unit', 'Unit'),
+        ('Litre', 'Litre'),
+
+    )
+
+    DIRECT_INDIRECT = (
+        ('Direct', 'Direct'),
+        ('Indirect', 'Indirect'),
+    )
+
+
+    SESSIONS = (
+        ('Morning', 'Morning'),
+        ('Evening', 'Evening'),
+    )
+
+    MIXTURES = (
+        ('First Mixture', 'First Mixture'),
+        ('Second Mixture', 'Second Mixture'),
+        ('Third Mixture', 'Third Mixture'),
+        ('Fourth Mixture', 'Fourth Mixture'),
+        ('Fifth Mixture', 'Fifth Mixture'),
+        ('Sixth Mixture', 'Sixth Mixture'),
+        ('Seventh Mixture', 'Seventh Mixture'),
+        ('Eight Mixture', 'Eight Mixture'),
+        ('Ninth Mixture', 'Ninth Mixture'),
+        ('Tenth Mixture', 'Tenth Mixture'),
+        ('Eleventh Mixture', 'Eleventh Mixture'),
+        ('Twelfth Mixture', 'Twelfth Mixture'),
+
+    )
+
+
+
+    created_at = models.DateField("Date", default=now)
+    department =  models.CharField(max_length = 500, choices=DEPARTMENTS, default='Bakery', null = True, blank = True, verbose_name = 'Department')
+    sub_department =  models.CharField(max_length = 500, choices=SUBDEPARTMENTS, default='', null = True, blank = True, verbose_name = 'Sub Department')
+    status =  models.CharField(max_length = 500, default='Rm Usage', null = True, blank = True, verbose_name = 'Status')
+    session = models.CharField(max_length = 500, choices=SESSIONS, default='', null = True, blank = True, verbose_name = 'Session')
+    mixture_number =  models.CharField(max_length = 500, choices=MIXTURES, default='', null = True, blank = True, verbose_name = 'Mixture Number')
+    supervisor =  models.CharField(max_length = 500,  default='', null = True, blank = True, verbose_name = 'Supervisor')
+    product = models.CharField(max_length=200, verbose_name = 'Product')
+    category = models.CharField(max_length = 500, verbose_name = 'Category', choices=DIRECT_INDIRECT, default='', null = True, blank = True,)
+    weight_per_pack = models.FloatField(default=0.0, verbose_name = 'Weight / Pack')
+    entry_measure = models.CharField(max_length = 500, verbose_name = 'Entry Measure', choices=ENTRYMEASURE, default='', null = True, blank = True,)
+    qty = models.FloatField(default=0.0, verbose_name = 'Quantity')
+    rm_total_weight_grams = models.FloatField(default=0.0, verbose_name = 'RM Total Weight (Grams)')
+    unit_cost_price = models.FloatField(default=0.0, verbose_name = 'Unit Cost Price')
+    total_cost_price = models.FloatField(default=0.0, verbose_name = 'Total Cost Price')
+
+    @property
+    def get_total_cost_price(self):
+        return self.qty * self.unit_cost_price
+    @property
+    def get_rm_total_weight_grams(self):
+        return float(self.qty) * float(self.weight_per_pack)
+
+    #@property
+    #def get_discount_amount(self):
+        #return self.discount * self.qty
+
+    #---------------- Value Calculations -----------------#
+
+    def save(self, *args, **kwargs):
+        self.total_cost_price= self.get_total_cost_price
+        self.rm_total_weight_grams= self.get_rm_total_weight_grams
+        super(BakeryRmUsageSubDepartments, self).save(*args, **kwargs)
+
+
+
+    def __str__(self):
+        return self.product
+
+
+    class Meta():
+        verbose_name = 'Bakery Raw Material Usage Sub-Departments'
+        verbose_name_plural = 'Bakery Raw Material Usage Sub-Departments'
         ordering: ['date']
 
 
@@ -336,6 +567,11 @@ class BakeryPayment(models.Model):
         ('Violet', 'Violet'),
         ('Kaba', 'Kaba'),
         ('Brenda', 'Brenda'),
+        ('Akem', 'Akem'),
+        ('Boulangerie Counter', 'Boulangerie Counter'),
+        ('Naomi', 'Naomi'),
+        ('Nana', 'Nana'),
+        ('Glen', 'Glen'),
 
     )
 

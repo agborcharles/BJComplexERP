@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'bakerycustomersinvoices'
 
+'''
 urlpatterns = [
     #path('', views.home, name='home'),
 
@@ -44,3 +45,4 @@ urlpatterns = [
     #path('add-order/', views.add_order_view, name='add-order'),
 
 ]
+'''

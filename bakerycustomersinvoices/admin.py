@@ -2,7 +2,7 @@ from django.contrib import admin
 from . models import *
 from import_export.admin import ImportExportModelAdmin
 # Register your models here.
-
+'''
 class CustomerAdmin(ImportExportModelAdmin):
     list_display = [ 'id', 'created', 'customer_name', 'slug',
                     'customer_type', 'is_active', ]
@@ -32,3 +32,4 @@ admin.site.register(InvoiceItem, InvoiceItemAdmin)
 admin.site.register(CustomerOpeningBalance, CustomerOpeningBalanceAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Invoice, InvoiceAdmin)
+'''

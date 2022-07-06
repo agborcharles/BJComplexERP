@@ -18,18 +18,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('configurations/', include('configurations.urls', namespace='configurations')),
     path('task/', include('task.urls', namespace='task')),
     path('purchase/', include('purchase.urls', namespace='purchase')),
-    path('bakerycustomersinvoices/', include('bakerycustomersinvoices.urls', namespace='bakerycustomersinvoices')),
+    #path('bakerycustomersinvoices/', include('bakerycustomersinvoices.urls', namespace='bakerycustomersinvoices')),
     path('bank/', include('bank.urls', namespace='bank')),
-    path('payroll/', include('payroll.urls', namespace='payroll')),
     path('bakery_accounting/', include('bakery_accounting.urls', namespace='bakery_accounting')),
     path('general_ledger/', include('general_ledger.urls', namespace='general_ledger')),
     path('procurement/', include('procurement.urls', namespace='procurement')),
     path('contact_list/', include('contact_list.urls', namespace='contact_list')),
+    #path('employee/', include('employee.urls', namespace='employee')),
 
 
 ]
